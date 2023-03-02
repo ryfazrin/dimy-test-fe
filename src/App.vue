@@ -1,30 +1,50 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { onMounted, ref } from 'vue';
+
+const products = ref([
+  {
+    name: "",
+    price: 0,
+    qty: 0,
+    total: 0
+  },
+]);
+
+function addMore() {
+  products.value.push({
+    name: "",
+    price: 0,
+    qty: 0,
+    total: 0
+  });
+}
+
+function remove(index) {
+  products.value.splice(index, 1);
+}
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <button type="button" @click="addMore()">
+      New
+    </button>
+    <div>
+      <div v-for="(product, index) in products" :key="index">
+        <label>Product name {{ product.name }}</label>
+        <input type="text" v-model="product.name" />
+        <label>Product price</label>
+        <input type="number" v-model="product.price" />
+        <label>Qty</label>
+        <input type="number" v-model="product.qty" />
+        <label>Total</label>
+        <input type="number" v-model="product.total" disabled />
+        <button type="button" @click="remove(index)" v-show="index != 0">
+          Delete
+        </button>
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
