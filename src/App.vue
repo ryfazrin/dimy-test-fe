@@ -62,27 +62,38 @@ function updateGradeTotal() {
 </script>
 
 <template>
-  <div>
-    <button type="button" @click="addMore()">
+  <div class="container">
+    <button class="btn btn-secondary" type="button" @click="addMore()">
       New
     </button>
-    <div>
-      <div v-for="(product, index) in products" :key="index">
-        <label>Product name</label>
-        <input type="text" v-model="product.name" />
-        <label>Product price</label>
-        <input type="number" @input="updatePrice($event, index)" v-model="product.price" />
-        <label>Qty</label>
-        <input type="number" min="1" v-model="product.qty" @input="updateQuantity($event, index)" />
-        <label>Total</label>
-        <input type="number" v-model="product.total" disabled />
-        <button type="button" v-show="index != 0" @click="remove(index)">
-          Delete
-        </button>
+    <div class="row">
+      <div class="col-12 row" v-for="(product, index) in products" :key="index">
+        <div class="col-2">
+          <label class="form-label">Product name</label>
+          <input class="form-control" type="text" v-model="product.name" />
+        </div>
+        <div class="col-2">
+          <label class="form-label">Product price</label>
+          <input class="form-control" type="number" @input="updatePrice($event, index)" v-model="product.price" />
+        </div>
+        <div class="col-2">
+          <label class="form-label">Qty</label>
+          <input class="form-control" type="number" min="1" v-model="product.qty"
+            @input="updateQuantity($event, index)" />
+        </div>
+        <div class="col-2">
+          <label class="form-label">Total</label>
+          <input class="form-control" type="number" v-model="product.total" disabled />
+        </div>
+        <div class="col-4 d-flex align-items-end">
+          <button class="btn btn-danger" type="button" v-show="index != 0" @click="remove(index)">
+            Delete
+          </button>
+        </div>
       </div>
-      <div>
-        <label>Grade total</label>
-        <input type="number" v-model="gradeTotal" disabled />
+      <div class="col-2 offset-6 me-1">
+        <label class="form-label">Grade total</label>
+        <input class="form-control" type="number" v-model="gradeTotal" disabled />
       </div>
     </div>
   </div>
