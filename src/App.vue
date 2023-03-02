@@ -11,6 +11,8 @@ const products = ref([
   },
 ]);
 
+const gradeTotal = ref(0)
+
 // Add form input
 function addMore() {
   products.value.push({
@@ -31,12 +33,13 @@ function remove(index) {
 function updatePrice(event, index) {
   let product = products.value[index]
   product.total = event.target.value * product.qty
+  updateGradeTotal()
 }
 
 // func handle Quantity
 function updateQuantity(event, index) {
   let product = products.value[index]
-  
+
   if (event.target.value < 1 & event.target.value != '') {
     alert('Quantity tidak boleh kurang dari 1.')
 
@@ -45,8 +48,17 @@ function updateQuantity(event, index) {
   }
 
   product.total = event.target.value * product.price
+  updateGradeTotal()
 }
 
+// func handle Grade Total
+function updateGradeTotal() {
+  console.log('update grade total')
+  gradeTotal.value = 0
+  products.value.map(item => {
+    gradeTotal.value += item.total
+  })
+}
 </script>
 
 <template>
@@ -67,6 +79,10 @@ function updateQuantity(event, index) {
         <button type="button" v-show="index != 0" @click="remove(index)">
           Delete
         </button>
+      </div>
+      <div>
+        <label>Grade total</label>
+        <input type="number" v-model="gradeTotal" disabled />
       </div>
     </div>
   </div>
